@@ -60,6 +60,7 @@ CREATE TABLE `beam` (
   `pointing_id` int(11) NOT NULL,
   `beam_type_id` int(11) DEFAULT NULL,
   `tsamp_seconds` decimal(8,8) DEFAULT NULL,
+  `is_coherent` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_pointing_id` (`pointing_id`),
   KEY `beam_type_id` (`beam_type_id`),
@@ -171,10 +172,11 @@ CREATE TABLE `circular_orbit_search` (
   `max_orb_phase_rad` decimal(3,3) DEFAULT NULL,
   `coverage` decimal(3,3) DEFAULT NULL,
   `mismatch` decimal(3,3) DEFAULT NULL,
-  `container_image` varchar(255) DEFAULT NULL,
-  `container_version` varchar(255) DEFAULT NULL,
+  `container_image_name` varchar(255) DEFAULT NULL,
+  `container_image_version` varchar(255) DEFAULT NULL,
   `container_type` varchar(255) DEFAULT NULL,
   `argument_hash` varchar(255) DEFAULT NULL,
+  `container_image_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -264,10 +266,11 @@ CREATE TABLE `elliptical_orbit_search` (
   `max_periastron_rad` decimal(3,3) DEFAULT NULL,
   `coverage` decimal(3,3) DEFAULT NULL,
   `mismatch` decimal(3,3) DEFAULT NULL,
-  `container_image` varchar(255) DEFAULT NULL,
-  `container_version` varchar(255) DEFAULT NULL,
+  `container_image_name` varchar(255) DEFAULT NULL,
+  `container_image_version` varchar(255) DEFAULT NULL,
   `container_type` varchar(255) DEFAULT NULL,
   `argument_hash` varchar(255) DEFAULT NULL,
+  `container_image_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -319,10 +322,11 @@ CREATE TABLE `filtool` (
   `telescope_name` varchar(255) DEFAULT NULL,
   `threads` int(11) DEFAULT NULL,
   `extra_args` varchar(255) DEFAULT NULL,
-  `container_image` varchar(255) DEFAULT NULL,
-  `container_version` varchar(255) DEFAULT NULL,
+  `container_image_name` varchar(255) DEFAULT NULL,
+  `container_image_version` varchar(255) DEFAULT NULL,
   `container_type` varchar(255) DEFAULT NULL,
   `argument_hash` varchar(255) DEFAULT NULL,
+  `container_image_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -397,6 +401,7 @@ CREATE TABLE `hardware` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
+  `job_scheduler` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -432,10 +437,11 @@ CREATE TABLE `peasoup` (
   `birdie_list` varchar(255) DEFAULT NULL,
   `chan_mask` varchar(255) DEFAULT NULL,
   `extra_args` varchar(255) DEFAULT NULL,
-  `container_image` varchar(255) DEFAULT NULL,
-  `container_version` varchar(255) DEFAULT NULL,
+  `container_image_name` varchar(255) DEFAULT NULL,
+  `container_image_version` varchar(255) DEFAULT NULL,
   `container_type` varchar(255) DEFAULT NULL,
   `argument_hash` varchar(255) DEFAULT NULL,
+  `container_image_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -460,10 +466,10 @@ CREATE TABLE `pipeline` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `pipeline_config_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pipeline_config_id` (`pipeline_config_id`),
-  CONSTRAINT `pipeline_ibfk_1` FOREIGN KEY (`pipeline_config_id`) REFERENCES `pipeline_config` (`id`)
+  `github_repo_name` varchar(255) DEFAULT NULL,
+  `github_commit_hash` char(40) DEFAULT NULL,
+  `github_branch` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -474,74 +480,6 @@ CREATE TABLE `pipeline` (
 LOCK TABLES `pipeline` WRITE;
 /*!40000 ALTER TABLE `pipeline` DISABLE KEYS */;
 /*!40000 ALTER TABLE `pipeline` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pipeline_config`
---
-
-DROP TABLE IF EXISTS `pipeline_config`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pipeline_config` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `peasoup_acc_start` float DEFAULT NULL,
-  `peasoup_acc_end` float DEFAULT NULL,
-  `peasoup_min_snr` float DEFAULT NULL,
-  `peasoup_ram_limit_gb` float DEFAULT NULL,
-  `peasoup_nh` int(11) DEFAULT NULL,
-  `peasoup_ngpus` int(11) DEFAULT NULL,
-  `peasoup_total_cands_limit` int(11) DEFAULT NULL,
-  `peasoup_fft_size` bigint(20) DEFAULT NULL,
-  `peasoup_dm_file` varchar(255) DEFAULT NULL,
-  `rfifind_time` float DEFAULT NULL,
-  `rfifind_freqsig` float DEFAULT NULL,
-  `rfifind_timesig` float DEFAULT NULL,
-  `rfifind_intfrac` float DEFAULT NULL,
-  `rfifind_chanfrac` float DEFAULT NULL,
-  `rfifind_nthreads` int(11) DEFAULT NULL,
-  `pulsarx_fold_script` varchar(255) DEFAULT NULL,
-  `pulsarx_fold_template` varchar(255) DEFAULT NULL,
-  `filtool_rfi_filter` varchar(255) DEFAULT NULL,
-  `kepler_3param_min_porb_h` float DEFAULT NULL,
-  `kepler_3param_max_porb_h` float DEFAULT NULL,
-  `kepler_3param_min_pulsar_mass_m0` float DEFAULT NULL,
-  `kepler_3param_max_comp_mass_m0` float DEFAULT NULL,
-  `kepler_3param_min_orb_phase_rad` float DEFAULT NULL,
-  `kepler_3param_max_orb_phase_rad` float DEFAULT NULL,
-  `kepler_5param_min_porb_h` float DEFAULT NULL,
-  `kepler_5param_max_porb_h` float DEFAULT NULL,
-  `kepler_5param_min_pulsar_mass_m0` float DEFAULT NULL,
-  `kepler_5param_max_comp_mass_m0` float DEFAULT NULL,
-  `kepler_5param_min_orb_phase_rad` float DEFAULT NULL,
-  `kepler_5param_max_orb_phase_rad` float DEFAULT NULL,
-  `kepler_5param_min_ecc` float DEFAULT NULL,
-  `kepler_5param_max_ecc` float DEFAULT NULL,
-  `kepler_5param_min_periastron_rad` float DEFAULT NULL,
-  `kepler_5param_max_periastron_rad` float DEFAULT NULL,
-  `candidate_filter_order` varchar(255) DEFAULT NULL,
-  `pulsarx_subint_length_s` float DEFAULT NULL,
-  `pulsarx_threads` int(11) DEFAULT NULL,
-  `pulsarx_fast_nbins` int(11) DEFAULT NULL,
-  `pulsarx_slow_nbins` int(11) DEFAULT NULL,
-  `pulsarx_nsubbands` int(11) DEFAULT NULL,
-  `prepfold_ncpus` int(11) DEFAULT NULL,
-  `prepfold_mask` varchar(255) DEFAULT NULL,
-  `kepler_3param_template_bank_coverage` float DEFAULT NULL,
-  `kepler_3param_template_bank_mismatch` float DEFAULT NULL,
-  `kepler_5param_template_bank_coverage` float DEFAULT NULL,
-  `kepler_5param_template_bank_mismatch` float DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pipeline_config`
---
-
-LOCK TABLES `pipeline_config` WRITE;
-/*!40000 ALTER TABLE `pipeline_config` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pipeline_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -640,10 +578,11 @@ CREATE TABLE `prepfold` (
   `ncpus` int(11) DEFAULT NULL,
   `rfifind_mask` varchar(255) DEFAULT NULL,
   `extra_args` varchar(1000) DEFAULT NULL,
-  `container_image` varchar(255) DEFAULT NULL,
-  `container_version` varchar(255) DEFAULT NULL,
+  `container_image_name` varchar(255) DEFAULT NULL,
+  `container_image_version` varchar(255) DEFAULT NULL,
   `container_type` varchar(255) DEFAULT NULL,
   `argument_hash` varchar(255) DEFAULT NULL,
+  `container_image_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -739,11 +678,12 @@ CREATE TABLE `pulsarx` (
   `slow_nbins` int(11) DEFAULT NULL,
   `rfi_filter` varchar(255) DEFAULT NULL,
   `extra_args` varchar(1000) DEFAULT NULL,
-  `container_image` varchar(255) DEFAULT NULL,
-  `container_version` varchar(255) DEFAULT NULL,
+  `container_image_name` varchar(255) DEFAULT NULL,
+  `container_image_version` varchar(255) DEFAULT NULL,
   `container_type` varchar(255) DEFAULT NULL,
   `threads` int(11) DEFAULT NULL,
   `argument_hash` varchar(255) DEFAULT NULL,
+  `container_image_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -773,10 +713,11 @@ CREATE TABLE `rfifind` (
   `int_frac` decimal(3,3) DEFAULT NULL,
   `ncpus` int(11) DEFAULT NULL,
   `extra_args` varchar(255) DEFAULT NULL,
-  `container_image` varchar(255) DEFAULT NULL,
-  `container_version` varchar(255) DEFAULT NULL,
+  `container_image_name` varchar(255) DEFAULT NULL,
+  `container_image_version` varchar(255) DEFAULT NULL,
   `container_type` varchar(255) DEFAULT NULL,
   `argument_hash` varchar(255) DEFAULT NULL,
+  `container_image_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -903,6 +844,40 @@ LOCK TABLES `telescope` WRITE;
 /*!40000 ALTER TABLE `telescope` DISABLE KEYS */;
 /*!40000 ALTER TABLE `telescope` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `user_labels`
+--
+
+DROP TABLE IF EXISTS `user_labels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_labels` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fold_candidate_id` int(11) DEFAULT NULL,
+  `rfi` tinyint(1) DEFAULT NULL,
+  `noise` tinyint(1) DEFAULT NULL,
+  `t1_cand` tinyint(1) DEFAULT NULL,
+  `t2_cand` tinyint(1) DEFAULT NULL,
+  `known_pulsar` tinyint(1) DEFAULT NULL,
+  `nb_psr` tinyint(1) DEFAULT NULL,
+  `is_harmonic` tinyint(1) DEFAULT NULL,
+  `is_confirmed_pulsar` tinyint(1) DEFAULT NULL,
+  `pulsar_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fold_candidate_id` (`fold_candidate_id`),
+  CONSTRAINT `user_labels_ibfk_1` FOREIGN KEY (`fold_candidate_id`) REFERENCES `fold_candidate` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_labels`
+--
+
+LOCK TABLES `user_labels` WRITE;
+/*!40000 ALTER TABLE `user_labels` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_labels` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -913,4 +888,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-17  5:16:17
+-- Dump completed on 2024-01-19  1:52:31

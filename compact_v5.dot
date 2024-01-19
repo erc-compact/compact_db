@@ -7,7 +7,7 @@
 //
 // Host: 127.0.0.1 (MySQL 11.1.3-MariaDB)
 // Database: COMPACT
-// Generation Time: 2024-01-17 04:16:34 +0000
+// Generation Time: 2024-01-19 00:53:12 +0000
 // ************************************************************
 
 digraph "Database Structure" {
@@ -46,6 +46,7 @@ digraph "Database Structure" {
 			<TR><TD COLSPAN="3" PORT="pointing_id">pointing_id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="beam_type_id">beam_type_id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="tsamp_seconds">tsamp_seconds:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">DECIMAL</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="is_coherent">is_coherent:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">TINYINT</FONT></TD></TR>
 			</TABLE>>
 		];
 	}
@@ -97,10 +98,11 @@ digraph "Database Structure" {
 			<TR><TD COLSPAN="3" PORT="max_orb_phase_rad">max_orb_phase_rad:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">DECIMAL</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="coverage">coverage:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">DECIMAL</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="mismatch">mismatch:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">DECIMAL</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_image">container_image:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_version">container_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_name">container_image_name:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_version">container_image_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="container_type">container_type:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="argument_hash">argument_hash:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_id">container_image_id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			</TABLE>>
 		];
 	}
@@ -152,10 +154,11 @@ digraph "Database Structure" {
 			<TR><TD COLSPAN="3" PORT="max_periastron_rad">max_periastron_rad:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">DECIMAL</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="coverage">coverage:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">DECIMAL</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="mismatch">mismatch:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">DECIMAL</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_image">container_image:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_version">container_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_name">container_image_name:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_version">container_image_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="container_type">container_type:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="argument_hash">argument_hash:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_id">container_image_id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			</TABLE>>
 		];
 	}
@@ -181,10 +184,11 @@ digraph "Database Structure" {
 			<TR><TD COLSPAN="3" PORT="telescope_name">telescope_name:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="threads">threads:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="extra_args">extra_args:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_image">container_image:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_version">container_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_name">container_image_name:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_version">container_image_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="container_type">container_type:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="argument_hash">argument_hash:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_id">container_image_id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			</TABLE>>
 		];
 	}
@@ -223,6 +227,7 @@ digraph "Database Structure" {
 			<TR><TD COLSPAN="3" PORT="id">id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="name">name:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="description">description:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="job_scheduler">job_scheduler:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			</TABLE>>
 		];
 	}
@@ -245,10 +250,11 @@ digraph "Database Structure" {
 			<TR><TD COLSPAN="3" PORT="birdie_list">birdie_list:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="chan_mask">chan_mask:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="extra_args">extra_args:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_image">container_image:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_version">container_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_name">container_image_name:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_version">container_image_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="container_type">container_type:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="argument_hash">argument_hash:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_id">container_image_id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			</TABLE>>
 		];
 	}
@@ -260,62 +266,9 @@ digraph "Database Structure" {
 			<TR><TD COLSPAN="3" PORT="id">id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="name">name:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="description">description:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="pipeline_config_id">pipeline_config_id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
-			</TABLE>>
-		];
-	}
-	subgraph "table_pipeline_config" {
-		node [ shape = "plaintext" ];
-		"pipeline_config" [ label=<
-			<TABLE BORDER="0" CELLSPACING="0" CELLBORDER="1">
-			<TR><TD COLSPAN="3" BGCOLOR="#DDDDDD">pipeline_config</TD></TR>
-			<TR><TD COLSPAN="3" PORT="id">id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="peasoup_acc_start">peasoup_acc_start:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="peasoup_acc_end">peasoup_acc_end:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="peasoup_min_snr">peasoup_min_snr:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="peasoup_ram_limit_gb">peasoup_ram_limit_gb:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="peasoup_nh">peasoup_nh:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="peasoup_ngpus">peasoup_ngpus:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="peasoup_total_cands_limit">peasoup_total_cands_limit:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="peasoup_fft_size">peasoup_fft_size:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">BIGINT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="peasoup_dm_file">peasoup_dm_file:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="rfifind_time">rfifind_time:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="rfifind_freqsig">rfifind_freqsig:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="rfifind_timesig">rfifind_timesig:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="rfifind_intfrac">rfifind_intfrac:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="rfifind_chanfrac">rfifind_chanfrac:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="rfifind_nthreads">rfifind_nthreads:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="pulsarx_fold_script">pulsarx_fold_script:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="pulsarx_fold_template">pulsarx_fold_template:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="filtool_rfi_filter">filtool_rfi_filter:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_3param_min_porb_h">kepler_3param_min_porb_h:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_3param_max_porb_h">kepler_3param_max_porb_h:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_3param_min_pulsar_mass_m0">kepler_3param_min_pulsar_mass_m0:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_3param_max_comp_mass_m0">kepler_3param_max_comp_mass_m0:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_3param_min_orb_phase_rad">kepler_3param_min_orb_phase_rad:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_3param_max_orb_phase_rad">kepler_3param_max_orb_phase_rad:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_5param_min_porb_h">kepler_5param_min_porb_h:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_5param_max_porb_h">kepler_5param_max_porb_h:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_5param_min_pulsar_mass_m0">kepler_5param_min_pulsar_mass_m0:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_5param_max_comp_mass_m0">kepler_5param_max_comp_mass_m0:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_5param_min_orb_phase_rad">kepler_5param_min_orb_phase_rad:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_5param_max_orb_phase_rad">kepler_5param_max_orb_phase_rad:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_5param_min_ecc">kepler_5param_min_ecc:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_5param_max_ecc">kepler_5param_max_ecc:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_5param_min_periastron_rad">kepler_5param_min_periastron_rad:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_5param_max_periastron_rad">kepler_5param_max_periastron_rad:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="candidate_filter_order">candidate_filter_order:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="pulsarx_subint_length_s">pulsarx_subint_length_s:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="pulsarx_threads">pulsarx_threads:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="pulsarx_fast_nbins">pulsarx_fast_nbins:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="pulsarx_slow_nbins">pulsarx_slow_nbins:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="pulsarx_nsubbands">pulsarx_nsubbands:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="prepfold_ncpus">prepfold_ncpus:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="prepfold_mask">prepfold_mask:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_3param_template_bank_coverage">kepler_3param_template_bank_coverage:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_3param_template_bank_mismatch">kepler_3param_template_bank_mismatch:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_5param_template_bank_coverage">kepler_5param_template_bank_coverage:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="kepler_5param_template_bank_mismatch">kepler_5param_template_bank_mismatch:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">FLOAT</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="github_repo_name">github_repo_name:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="github_commit_hash">github_commit_hash:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">CHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="github_branch">github_branch:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			</TABLE>>
 		];
 	}
@@ -366,10 +319,11 @@ digraph "Database Structure" {
 			<TR><TD COLSPAN="3" PORT="ncpus">ncpus:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="rfifind_mask">rfifind_mask:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="extra_args">extra_args:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_image">container_image:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_version">container_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_name">container_image_name:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_version">container_image_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="container_type">container_type:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="argument_hash">argument_hash:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_id">container_image_id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			</TABLE>>
 		];
 	}
@@ -415,11 +369,12 @@ digraph "Database Structure" {
 			<TR><TD COLSPAN="3" PORT="slow_nbins">slow_nbins:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="rfi_filter">rfi_filter:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="extra_args">extra_args:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_image">container_image:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_version">container_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_name">container_image_name:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_version">container_image_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="container_type">container_type:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="threads">threads:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="argument_hash">argument_hash:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_id">container_image_id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			</TABLE>>
 		];
 	}
@@ -436,10 +391,11 @@ digraph "Database Structure" {
 			<TR><TD COLSPAN="3" PORT="int_frac">int_frac:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">DECIMAL</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="ncpus">ncpus:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="extra_args">extra_args:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_image">container_image:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
-			<TR><TD COLSPAN="3" PORT="container_version">container_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_name">container_image_name:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_version">container_image_version:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="container_type">container_type:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			<TR><TD COLSPAN="3" PORT="argument_hash">argument_hash:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="container_image_id">container_image_id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
 			</TABLE>>
 		];
 	}
@@ -506,6 +462,25 @@ digraph "Database Structure" {
 			</TABLE>>
 		];
 	}
+	subgraph "table_user_labels" {
+		node [ shape = "plaintext" ];
+		"user_labels" [ label=<
+			<TABLE BORDER="0" CELLSPACING="0" CELLBORDER="1">
+			<TR><TD COLSPAN="3" BGCOLOR="#DDDDDD">user_labels</TD></TR>
+			<TR><TD COLSPAN="3" PORT="id">id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="fold_candidate_id">fold_candidate_id:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">INT</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="rfi">rfi:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">TINYINT</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="noise">noise:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">TINYINT</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="t1_cand">t1_cand:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">TINYINT</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="t2_cand">t2_cand:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">TINYINT</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="known_pulsar">known_pulsar:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">TINYINT</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="nb_psr">nb_psr:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">TINYINT</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="is_harmonic">is_harmonic:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">TINYINT</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="is_confirmed_pulsar">is_confirmed_pulsar:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">TINYINT</FONT></TD></TR>
+			<TR><TD COLSPAN="3" PORT="pulsar_name">pulsar_name:<FONT FACE="Helvetica-Oblique" POINT-SIZE="10">VARCHAR</FONT></TD></TR>
+			</TABLE>>
+		];
+	}
 edge [ arrowhead=inv, arrowtail=normal, style=dashed, color="#444444" ];
 antenna:telescope_id -> telescope:id ;
 beam:pointing_id -> pointing:id ;
@@ -523,7 +498,6 @@ fold_candidate:file_type_id -> file_type:id ;
 fold_candidate:pointing_id -> pointing:id ;
 fold_candidate:processing_id -> processing:id ;
 fold_candidate:search_candidate_id -> search_candidate:id ;
-pipeline:pipeline_config_id -> pipeline_config:id ;
 pipeline_execution_order:circular_orbit_search_id -> circular_orbit_search:id ;
 pipeline_execution_order:elliptical_orbit_search_id -> elliptical_orbit_search:id ;
 pipeline_execution_order:pipeline_id -> pipeline:id ;
@@ -542,4 +516,5 @@ search_candidate:beam_id -> beam:id ;
 search_candidate:pointing_id -> pointing:id ;
 search_candidate:processing_id -> processing:id ;
 target:project_id -> project:id ;
+user_labels:fold_candidate_id -> fold_candidate:id ;
 }
