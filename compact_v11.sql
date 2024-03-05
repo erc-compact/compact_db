@@ -199,9 +199,7 @@ DROP TABLE IF EXISTS `data_product`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `data_product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pointing_id` int(11) NOT NULL,
   `beam_id` int(11) NOT NULL,
-  `processing_id` int(11) NOT NULL,
   `file_type_id` int(11) NOT NULL,
   `filename` varchar(255) DEFAULT NULL,
   `filepath` varchar(255) DEFAULT NULL,
@@ -211,28 +209,23 @@ CREATE TABLE `data_product` (
   `modification_date` datetime DEFAULT NULL,
   `metainfo` varchar(255) DEFAULT NULL,
   `locked` tinyint(4) DEFAULT NULL,
-  `created_by` varchar(255) DEFAULT NULL,
-  `beam_type_id` int(11) NOT NULL,
-  `target_id` int(11) DEFAULT NULL,
   `utc_start` datetime DEFAULT NULL,
   `tsamp_seconds` decimal(20,10) DEFAULT NULL,
   `tobs_seconds` decimal(20,10) DEFAULT NULL,
   `nsamples` bigint(20) DEFAULT NULL,
   `freq_start_mhz` decimal(20,10) DEFAULT NULL,
   `freq_end_mhz` decimal(20,10) DEFAULT NULL,
+  `created_by_processing_id` int(11) DEFAULT NULL,
+  `hardware_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_dp_pointing_id` (`pointing_id`),
   KEY `fk_dp_beam_id` (`beam_id`),
-  KEY `fk_dp_processing_id` (`processing_id`),
   KEY `fk_dp_file_type_id` (`file_type_id`),
-  KEY `fk_dp_beam_type_id` (`beam_type_id`),
-  KEY `target_id` (`target_id`),
-  CONSTRAINT `data_product_ibfk_1` FOREIGN KEY (`target_id`) REFERENCES `target` (`id`),
+  KEY `fk_created_by_processing_id` (`created_by_processing_id`),
+  KEY `fk_hardware_id` (`hardware_id`),
   CONSTRAINT `data_product_ibfk_2` FOREIGN KEY (`beam_id`) REFERENCES `beam` (`id`),
-  CONSTRAINT `data_product_ibfk_3` FOREIGN KEY (`pointing_id`) REFERENCES `pointing` (`id`),
-  CONSTRAINT `data_product_ibfk_4` FOREIGN KEY (`beam_type_id`) REFERENCES `beam_type` (`id`),
   CONSTRAINT `data_product_ibfk_6` FOREIGN KEY (`file_type_id`) REFERENCES `file_type` (`id`),
-  CONSTRAINT `data_product_ibfk_7` FOREIGN KEY (`processing_id`) REFERENCES `processing` (`id`)
+  CONSTRAINT `fk_created_by_processing_id` FOREIGN KEY (`created_by_processing_id`) REFERENCES `processing` (`id`),
+  CONSTRAINT `fk_hardware_id` FOREIGN KEY (`hardware_id`) REFERENCES `hardware` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -609,6 +602,34 @@ LOCK TABLES `processing` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `processing_dp_inputs`
+--
+
+DROP TABLE IF EXISTS `processing_dp_inputs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `processing_dp_inputs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dp_id` int(11) NOT NULL,
+  `processing_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dp_id` (`dp_id`),
+  KEY `processing_id` (`processing_id`),
+  CONSTRAINT `processing_dp_inputs_ibfk_1` FOREIGN KEY (`dp_id`) REFERENCES `data_product` (`id`),
+  CONSTRAINT `processing_dp_inputs_ibfk_2` FOREIGN KEY (`processing_id`) REFERENCES `processing` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `processing_dp_inputs`
+--
+
+LOCK TABLES `processing_dp_inputs` WRITE;
+/*!40000 ALTER TABLE `processing_dp_inputs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `processing_dp_inputs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `project`
 --
 
@@ -863,4 +884,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-03  1:55:05
+-- Dump completed on 2024-03-05 23:49:30
