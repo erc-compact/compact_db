@@ -217,6 +217,8 @@ CREATE TABLE `data_product` (
   `freq_end_mhz` decimal(20,10) DEFAULT NULL,
   `created_by_processing_id` int(11) DEFAULT NULL,
   `hardware_id` int(11) DEFAULT NULL,
+  `tstart` decimal(20,10) DEFAULT NULL,
+  `fft_size` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_dp_beam_id` (`beam_id`),
   KEY `fk_dp_file_type_id` (`file_type_id`),
@@ -347,27 +349,22 @@ CREATE TABLE `fold_candidate` (
   `processing_id` int(11) NOT NULL,
   `spin_period` decimal(20,10) DEFAULT NULL,
   `dm` decimal(20,10) DEFAULT NULL,
-  `acc` decimal(20,10) DEFAULT NULL,
-  `jerk` decimal(20,10) DEFAULT NULL,
-  `omega` decimal(20,10) DEFAULT NULL,
-  `tau` decimal(20,10) DEFAULT NULL,
-  `phi` decimal(20,10) DEFAULT NULL,
-  `long_periastron` decimal(20,10) DEFAULT NULL,
-  `ecc` decimal(20,10) DEFAULT NULL,
+  `pdot` decimal(20,10) DEFAULT NULL,
+  `pdotdot` decimal(20,10) DEFAULT NULL,
   `fold_snr` decimal(20,10) DEFAULT NULL,
   `filename` varchar(255) DEFAULT NULL,
   `filepath` varchar(255) DEFAULT NULL,
-  `file_type_id` int(11) DEFAULT NULL,
   `search_candidate_id` int(11) DEFAULT NULL,
   `metadata_hash` varchar(255) DEFAULT NULL,
+  `dp_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_fc_pointing_id` (`pointing_id`),
   KEY `fk_fc_beam_id` (`beam_id`),
   KEY `fk_fc_processing_id` (`processing_id`),
-  KEY `file_type_id` (`file_type_id`),
   KEY `search_candidate_id` (`search_candidate_id`),
+  KEY `fk_fold_candidate_dp_id` (`dp_id`),
   CONSTRAINT `fk_fold_candidate_beam_id` FOREIGN KEY (`beam_id`) REFERENCES `beam` (`id`),
-  CONSTRAINT `fk_fold_candidate_file_type_id` FOREIGN KEY (`file_type_id`) REFERENCES `file_type` (`id`),
+  CONSTRAINT `fk_fold_candidate_dp_id` FOREIGN KEY (`dp_id`) REFERENCES `data_product` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_fold_candidate_pointing_id` FOREIGN KEY (`pointing_id`) REFERENCES `pointing` (`id`),
   CONSTRAINT `fk_fold_candidate_processing_id` FOREIGN KEY (`processing_id`) REFERENCES `processing` (`id`),
   CONSTRAINT `fold_candidate_ibfk_2` FOREIGN KEY (`search_candidate_id`) REFERENCES `search_candidate` (`id`)
@@ -741,29 +738,31 @@ CREATE TABLE `search_candidate` (
   `processing_id` int(11) NOT NULL,
   `spin_period` decimal(20,10) DEFAULT NULL,
   `dm` decimal(20,10) DEFAULT NULL,
-  `acc` decimal(20,10) DEFAULT NULL,
-  `jerk` decimal(20,10) DEFAULT NULL,
+  `pdot` decimal(20,10) DEFAULT NULL,
+  `pdotdot` decimal(20,10) DEFAULT NULL,
+  `pb` decimal(20,10) DEFAULT NULL,
+  `x` decimal(20,10) DEFAULT NULL,
+  `t0` decimal(20,10) DEFAULT NULL,
   `omega` decimal(20,10) DEFAULT NULL,
-  `tau` decimal(20,10) DEFAULT NULL,
-  `phi` decimal(20,10) DEFAULT NULL,
-  `long_periastron` decimal(20,10) DEFAULT NULL,
-  `ecc` decimal(20,10) DEFAULT NULL,
+  `e` decimal(20,10) DEFAULT NULL,
   `snr` decimal(20,10) DEFAULT NULL,
   `ddm_count_ratio` decimal(20,10) DEFAULT NULL,
   `ddm_snr_ratio` decimal(20,10) DEFAULT NULL,
   `nassoc` int(11) DEFAULT NULL,
-  `tstart` decimal(20,10) DEFAULT NULL,
-  `fft_size` bigint(20) DEFAULT NULL,
   `filename` varchar(255) DEFAULT NULL,
   `filepath` varchar(255) DEFAULT NULL,
   `nh` int(11) DEFAULT NULL,
   `candidate_filter_id` int(11) DEFAULT NULL,
   `metadata_hash` varchar(255) DEFAULT NULL,
+  `dp_id` int(11) DEFAULT NULL,
+  `candidate_id_in_file` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_sc_pointing_id` (`pointing_id`),
   KEY `fk_sc_beam_id` (`beam_id`),
   KEY `fk_sc_processing_id` (`processing_id`),
   KEY `filter_id` (`candidate_filter_id`),
+  KEY `fk_search_candidate_dp_id` (`dp_id`),
+  CONSTRAINT `fk_search_candidate_dp_id` FOREIGN KEY (`dp_id`) REFERENCES `data_product` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `search_candidate_ibfk_1` FOREIGN KEY (`candidate_filter_id`) REFERENCES `candidate_filter` (`id`),
   CONSTRAINT `search_candidate_ibfk_2` FOREIGN KEY (`beam_id`) REFERENCES `beam` (`id`),
   CONSTRAINT `search_candidate_ibfk_3` FOREIGN KEY (`pointing_id`) REFERENCES `pointing` (`id`),
@@ -842,6 +841,35 @@ LOCK TABLES `telescope` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `fullname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `administrator` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username_unique` (`username`),
+  UNIQUE KEY `email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_labels`
 --
 
@@ -860,8 +888,11 @@ CREATE TABLE `user_labels` (
   `is_harmonic` tinyint(1) DEFAULT NULL,
   `is_confirmed_pulsar` tinyint(1) DEFAULT NULL,
   `pulsar_name` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fold_candidate_id` (`fold_candidate_id`),
+  KEY `fk_user_labels_user_id` (`user_id`),
+  CONSTRAINT `fk_user_labels_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `user_labels_ibfk_1` FOREIGN KEY (`fold_candidate_id`) REFERENCES `fold_candidate` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -884,4 +915,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-05 23:49:30
+-- Dump completed on 2024-03-06 23:36:49
