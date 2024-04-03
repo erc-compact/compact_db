@@ -357,12 +357,15 @@ CREATE TABLE `fold_candidate` (
   `search_candidate_id` int(11) DEFAULT NULL,
   `metadata_hash` varchar(255) DEFAULT NULL,
   `dp_id` int(11) DEFAULT NULL,
+  `candidate_filter_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_fc_pointing_id` (`pointing_id`),
   KEY `fk_fc_beam_id` (`beam_id`),
   KEY `fk_fc_processing_id` (`processing_id`),
   KEY `search_candidate_id` (`search_candidate_id`),
   KEY `fk_fold_candidate_dp_id` (`dp_id`),
+  KEY `fk_fold_cand_candidate_filter_id` (`candidate_filter_id`),
+  CONSTRAINT `fk_fold_cand_candidate_filter_id` FOREIGN KEY (`candidate_filter_id`) REFERENCES `candidate_filter` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_fold_candidate_beam_id` FOREIGN KEY (`beam_id`) REFERENCES `beam` (`id`),
   CONSTRAINT `fk_fold_candidate_dp_id` FOREIGN KEY (`dp_id`) REFERENCES `data_product` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_fold_candidate_pointing_id` FOREIGN KEY (`pointing_id`) REFERENCES `pointing` (`id`),
@@ -639,7 +642,7 @@ CREATE TABLE `project` (
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_project_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -828,7 +831,7 @@ CREATE TABLE `telescope` (
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -837,6 +840,11 @@ CREATE TABLE `telescope` (
 
 LOCK TABLES `telescope` WRITE;
 /*!40000 ALTER TABLE `telescope` DISABLE KEYS */;
+INSERT INTO `telescope` VALUES
+(1,'MeerKAT','Radio Interferometer in South Africa'),
+(2,'Effelsberg','Single-Dish Radio telescope in Germany'),
+(3,'Parkes','Single-Dish Radio telescope in Australia'),
+(4,'GBT','Robert C. Byrd Green Bank Telescope in West Virginia');
 /*!40000 ALTER TABLE `telescope` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -915,4 +923,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-06 23:36:49
+-- Dump completed on 2024-04-03 23:37:59
