@@ -1,8 +1,8 @@
--- MariaDB dump 10.19-11.1.3-MariaDB, for osx10.19 (arm64)
+-- MariaDB dump 10.19-11.3.2-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: compact
 -- ------------------------------------------------------
--- Server version	11.1.3-MariaDB
+-- Server version	11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -198,7 +198,7 @@ DROP TABLE IF EXISTS `data_product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `data_product` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` binary(16) NOT NULL,
   `beam_id` int(11) NOT NULL,
   `file_type_id` int(11) NOT NULL,
   `filename` varchar(255) DEFAULT NULL,
@@ -215,7 +215,7 @@ CREATE TABLE `data_product` (
   `nsamples` bigint(20) DEFAULT NULL,
   `freq_start_mhz` decimal(20,10) DEFAULT NULL,
   `freq_end_mhz` decimal(20,10) DEFAULT NULL,
-  `created_by_processing_id` int(11) DEFAULT NULL,
+  `created_by_processing_id` binary(16) DEFAULT NULL,
   `hardware_id` int(11) DEFAULT NULL,
   `tstart` decimal(20,10) DEFAULT NULL,
   `fft_size` bigint(20) DEFAULT NULL,
@@ -226,7 +226,7 @@ CREATE TABLE `data_product` (
   KEY `fk_hardware_id` (`hardware_id`),
   CONSTRAINT `data_product_ibfk_2` FOREIGN KEY (`beam_id`) REFERENCES `beam` (`id`),
   CONSTRAINT `data_product_ibfk_6` FOREIGN KEY (`file_type_id`) REFERENCES `file_type` (`id`),
-  CONSTRAINT `fk_created_by_processing_id` FOREIGN KEY (`created_by_processing_id`) REFERENCES `processing` (`id`),
+  CONSTRAINT `fk_data_product_created_by_processing_id` FOREIGN KEY (`created_by_processing_id`) REFERENCES `processing` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_hardware_id` FOREIGN KEY (`hardware_id`) REFERENCES `hardware` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -343,10 +343,10 @@ DROP TABLE IF EXISTS `fold_candidate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fold_candidate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` binary(16) NOT NULL,
   `pointing_id` int(11) NOT NULL,
   `beam_id` int(11) NOT NULL,
-  `processing_id` int(11) NOT NULL,
+  `processing_id` binary(16) DEFAULT NULL,
   `spin_period` decimal(20,10) DEFAULT NULL,
   `dm` decimal(20,10) DEFAULT NULL,
   `pdot` decimal(20,10) DEFAULT NULL,
@@ -354,9 +354,9 @@ CREATE TABLE `fold_candidate` (
   `fold_snr` decimal(20,10) DEFAULT NULL,
   `filename` varchar(255) DEFAULT NULL,
   `filepath` varchar(255) DEFAULT NULL,
-  `search_candidate_id` int(11) DEFAULT NULL,
+  `search_candidate_id` binary(16) DEFAULT NULL,
   `metadata_hash` varchar(255) DEFAULT NULL,
-  `dp_id` int(11) DEFAULT NULL,
+  `dp_id` binary(16) DEFAULT NULL,
   `candidate_filter_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_fc_pointing_id` (`pointing_id`),
@@ -367,10 +367,10 @@ CREATE TABLE `fold_candidate` (
   KEY `fk_fold_cand_candidate_filter_id` (`candidate_filter_id`),
   CONSTRAINT `fk_fold_cand_candidate_filter_id` FOREIGN KEY (`candidate_filter_id`) REFERENCES `candidate_filter` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_fold_candidate_beam_id` FOREIGN KEY (`beam_id`) REFERENCES `beam` (`id`),
-  CONSTRAINT `fk_fold_candidate_dp_id` FOREIGN KEY (`dp_id`) REFERENCES `data_product` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_fold_candidate_dp_id` FOREIGN KEY (`dp_id`) REFERENCES `data_product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_fold_candidate_pointing_id` FOREIGN KEY (`pointing_id`) REFERENCES `pointing` (`id`),
-  CONSTRAINT `fk_fold_candidate_processing_id` FOREIGN KEY (`processing_id`) REFERENCES `processing` (`id`),
-  CONSTRAINT `fold_candidate_ibfk_2` FOREIGN KEY (`search_candidate_id`) REFERENCES `search_candidate` (`id`)
+  CONSTRAINT `fk_fold_candidate_processing_id` FOREIGN KEY (`processing_id`) REFERENCES `processing` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_fold_candidate_search_candidate_id` FOREIGN KEY (`search_candidate_id`) REFERENCES `search_candidate` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -549,7 +549,7 @@ DROP TABLE IF EXISTS `processing`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `processing` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` binary(16) NOT NULL,
   `pipeline_id` int(11) DEFAULT NULL,
   `hardware_id` int(11) DEFAULT NULL,
   `submit_time` datetime DEFAULT NULL,
@@ -609,14 +609,14 @@ DROP TABLE IF EXISTS `processing_dp_inputs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `processing_dp_inputs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `dp_id` int(11) NOT NULL,
-  `processing_id` int(11) NOT NULL,
+  `id` binary(16) NOT NULL,
+  `dp_id` binary(16) DEFAULT NULL,
+  `processing_id` binary(16) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `dp_id` (`dp_id`),
   KEY `processing_id` (`processing_id`),
-  CONSTRAINT `processing_dp_inputs_ibfk_1` FOREIGN KEY (`dp_id`) REFERENCES `data_product` (`id`),
-  CONSTRAINT `processing_dp_inputs_ibfk_2` FOREIGN KEY (`processing_id`) REFERENCES `processing` (`id`)
+  CONSTRAINT `fk_processing_dp_inputs_dp_id` FOREIGN KEY (`dp_id`) REFERENCES `data_product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_processing_dp_inputs_processing_id` FOREIGN KEY (`processing_id`) REFERENCES `processing` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -735,10 +735,10 @@ DROP TABLE IF EXISTS `search_candidate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `search_candidate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` binary(16) NOT NULL,
   `pointing_id` int(11) NOT NULL,
   `beam_id` int(11) NOT NULL,
-  `processing_id` int(11) NOT NULL,
+  `processing_id` binary(16) DEFAULT NULL,
   `spin_period` decimal(20,10) DEFAULT NULL,
   `dm` decimal(20,10) DEFAULT NULL,
   `pdot` decimal(20,10) DEFAULT NULL,
@@ -757,7 +757,7 @@ CREATE TABLE `search_candidate` (
   `nh` int(11) DEFAULT NULL,
   `candidate_filter_id` int(11) DEFAULT NULL,
   `metadata_hash` varchar(255) DEFAULT NULL,
-  `dp_id` int(11) DEFAULT NULL,
+  `dp_id` binary(16) DEFAULT NULL,
   `candidate_id_in_file` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_sc_pointing_id` (`pointing_id`),
@@ -765,11 +765,11 @@ CREATE TABLE `search_candidate` (
   KEY `fk_sc_processing_id` (`processing_id`),
   KEY `filter_id` (`candidate_filter_id`),
   KEY `fk_search_candidate_dp_id` (`dp_id`),
-  CONSTRAINT `fk_search_candidate_dp_id` FOREIGN KEY (`dp_id`) REFERENCES `data_product` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_search_candidate_dp_id` FOREIGN KEY (`dp_id`) REFERENCES `data_product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_search_candidate_processing_id` FOREIGN KEY (`processing_id`) REFERENCES `processing` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `search_candidate_ibfk_1` FOREIGN KEY (`candidate_filter_id`) REFERENCES `candidate_filter` (`id`),
   CONSTRAINT `search_candidate_ibfk_2` FOREIGN KEY (`beam_id`) REFERENCES `beam` (`id`),
-  CONSTRAINT `search_candidate_ibfk_3` FOREIGN KEY (`pointing_id`) REFERENCES `pointing` (`id`),
-  CONSTRAINT `search_candidate_ibfk_4` FOREIGN KEY (`processing_id`) REFERENCES `processing` (`id`)
+  CONSTRAINT `search_candidate_ibfk_3` FOREIGN KEY (`pointing_id`) REFERENCES `pointing` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -886,7 +886,7 @@ DROP TABLE IF EXISTS `user_labels`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_labels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fold_candidate_id` int(11) DEFAULT NULL,
+  `fold_candidate_id` binary(16) DEFAULT NULL,
   `rfi` tinyint(1) DEFAULT NULL,
   `noise` tinyint(1) DEFAULT NULL,
   `t1_cand` tinyint(1) DEFAULT NULL,
@@ -900,8 +900,8 @@ CREATE TABLE `user_labels` (
   PRIMARY KEY (`id`),
   KEY `fold_candidate_id` (`fold_candidate_id`),
   KEY `fk_user_labels_user_id` (`user_id`),
-  CONSTRAINT `fk_user_labels_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `user_labels_ibfk_1` FOREIGN KEY (`fold_candidate_id`) REFERENCES `fold_candidate` (`id`)
+  CONSTRAINT `fk_user_labels_fold_candidate_id` FOREIGN KEY (`fold_candidate_id`) REFERENCES `fold_candidate` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_user_labels_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -923,4 +923,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-03 23:37:59
+-- Dump completed on 2024-04-19  0:58:00
